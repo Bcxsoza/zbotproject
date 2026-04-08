@@ -16,7 +16,7 @@ ZAMMAD_HEADERS = {
 
 ANTHROPIC_CLIENT = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-ZULIP_CLIENT = zulip.Client(config_files="Kanti-zuliprc")
+ZULIP_CLIENT = zulip.Client(config_file="Kanti-zuliprc")
 
 AGENTS = {
         "T1": [
@@ -129,6 +129,7 @@ def create_zammad_ticket(classification, requester_name, requester_email):
 
     # Look up the agent's Zammad user ID
     agent_id = get_zammad_user_id(agent["email"])
+    customer_id= get_zammad_user_id(requester_email, requester_name)
 
     # Build the ticket payload
     ticket_data = {
@@ -136,7 +137,7 @@ def create_zammad_ticket(classification, requester_name, requester_email):
         "group": group,
         "priority": classification["severity"],
         "state": "new",
-        "customer": requester_email,
+        "customer_id": customer_id,
         "article": {
             "subject": classification["title"],
             "body": f"""
@@ -166,6 +167,8 @@ Original Request:
     )
 
     ticket = response.json()
+    print(f"Zammad response status: {response.status_code}")
+    print(f"Zammad response body: {ticket}")
 
     return {
         "ticket_id": ticket["id"],
