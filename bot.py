@@ -121,11 +121,19 @@ def create_zammad_ticket(classification, requester_name, requester_email):
 
     # Map tier to Zammad group name
     group_map = {
-        "T1": "T1-Helpdesk",
-        "T2": "T2-Support",
-        "T3": "T3-Engineering"
+        "T1": "T1 - Helpdesk",
+        "T2": "T2 - Support",
+        "T3": "T3 - Engineering"
     }
     group = group_map[classification["tier"]]
+
+    priority_map = {
+        "Low": "1 low",
+        "Medium": "2 normal",
+        "High": "3 high",
+        "Critical": "3 high"        
+    }
+    priority = priority_map[classification["severeity"]]
 
     # Look up the agent's Zammad user ID
     agent_id = get_zammad_user_id(agent["email"])
@@ -135,7 +143,7 @@ def create_zammad_ticket(classification, requester_name, requester_email):
     ticket_data = {
         "title": classification["title"],
         "group": group,
-        "priority": classification["severity"],
+        "priority": priority,
         "state": "new",
         "customer_id": customer_id,
         "article": {
