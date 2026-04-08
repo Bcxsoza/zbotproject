@@ -1,0 +1,5 @@
+.env
+Kanti-zuliprc
+__pycache__/
+venv/
+*.pyc
