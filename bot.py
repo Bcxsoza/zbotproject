@@ -223,7 +223,7 @@ def notify_agent(ticket_result, original_message):
 {original_message}
 
 Please log into Zammad to view and work this ticket.
-http://192.168.50.176
+{ZAMMAD_URL}
     """
 
     send_zulip_message(ticket_result["agent"]["email"], "New Ticket Assigned", message)
