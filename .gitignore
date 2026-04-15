@@ -1,5 +1,32 @@
+# Credentials and secrets
 .env
 Kanti-zuliprc
+*.zuliprc
+
+# Python
 __pycache__/
-venv/
 *.pyc
+*.pyo
+*.pyd
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Editor and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test files
+test_*.py
+*.test.py
